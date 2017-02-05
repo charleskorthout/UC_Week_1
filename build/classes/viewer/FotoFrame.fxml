@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="403.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewer.FotoFrameController">
+   <children>
+      <HBox prefHeight="404.0" prefWidth="403.0" spacing="10.0">
+         <children>
+            <ListView fx:id="lvFotos" prefHeight="277.0" prefWidth="235.0" />
+            <AnchorPane prefHeight="277.0" prefWidth="160.0">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <Button fx:id="btInlezen" layoutX="6.0" layoutY="2.0" mnemonicParsing="false" onAction="#handleButtonInlezen" prefHeight="25.0" prefWidth="91.0" text="Inlezen" />
+                  <GridPane layoutX="6.0" layoutY="58.0" prefHeight="74.0" prefWidth="146.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="67.0" minWidth="10.0" prefWidth="51.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="102.0" minWidth="10.0" prefWidth="95.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="48.0" text="breedte:" />
+                        <Label text="hoogte:" GridPane.rowIndex="1" />
+                        <Label text="naam:" GridPane.rowIndex="2" />
+                        <TextField fx:id="tfInputBreedte" GridPane.columnIndex="1" />
+                        <TextField fx:id="tfInputHoogte" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="tfInputNaam" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+                  <Button fx:id="btNieuweFoto" layoutX="35.0" layoutY="139.0" mnemonicParsing="false" onAction="#handleButtonNieuweFoto" text="Nieuwe foto" />
+                  <GridPane layoutX="6.0" layoutY="193.0" prefHeight="81.0" prefWidth="146.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="76.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="70.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Sorteren op:" />
+                        <Button fx:id="btSortHoogte" mnemonicParsing="false" onAction="#handleButtonSortHoogte" prefHeight="10.0" prefWidth="59.0" text="hoogte" GridPane.columnIndex="1" />
+                        <Button fx:id="btSortBreedte" mnemonicParsing="false" onAction="#handleButtonSortBreedte" prefHeight="10.0" prefWidth="59.0" text="breedte" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="btSortNaam" mnemonicParsing="false" onAction="#handleButtonSortNaam" prefHeight="10.0" prefWidth="59.0" text="naam" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <Pane prefHeight="171.0" prefWidth="403.0">
+         <children>
+            <Label layoutX="14.0" layoutY="6.0" text="Geselecteerde foto:" />
+            <GridPane layoutX="14.0" layoutY="26.0" prefHeight="34.0" prefWidth="380.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="tfSelectedNaam" editable="false" prefHeight="39.0" prefWidth="127.0" text="Naam:" />
+                  <TextField fx:id="tfSelectedHoogte" editable="false" prefHeight="40.0" prefWidth="127.0" text="Hoogte:" GridPane.columnIndex="1" />
+                  <TextField fx:id="tfSelectedBreedte" editable="false" prefHeight="40.0" prefWidth="126.0" text="Breedte:" GridPane.columnIndex="2" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+   </children>
+</VBox>
