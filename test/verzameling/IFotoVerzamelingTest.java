@@ -5,12 +5,18 @@
  */
 package verzameling;
 
+import com.sun.xml.internal.ws.util.StreamUtils;
+import fotos.Comparison.BreedteComparator;
+import fotos.Comparison.HoogteComparator;
 import fotos.Comparison.NaamComparator;
 import fotos.Foto;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
 import java.util.regex.Matcher;
+import java.util.stream.StreamSupport;
+import java.util.stream.Stream;
 import javafx.collections.ObservableList;
 import org.hamcrest.Description;
 import org.junit.After;
@@ -29,6 +35,9 @@ import org.junit.internal.matchers.TypeSafeMatcher;
 public class IFotoVerzamelingTest {
     private Foto foto1;
     private Foto foto2;
+    private Foto foto3;
+    private Foto foto4;
+    private IFotoVerzameling fotos;
 
     public IFotoVerzamelingTest() {
     }
@@ -45,6 +54,9 @@ public class IFotoVerzamelingTest {
     public void setUp() {
         this.foto1 = new Foto(200,100,"zeezicht");
         this.foto2 = new Foto(200,100,"bergen");
+        this.foto3 = new Foto(201,100,"horizon");
+        this.foto4 = new Foto(202,100,"rivier");
+        this.fotos = new VerzamelingLijst();
     }
     
     @After
@@ -58,8 +70,40 @@ public class IFotoVerzamelingTest {
       }
       return true;
     }
-    
-        
+
+    public static final boolean isSorted2(IFotoVerzameling fotos, Comparator comp) {
+        Iterator<Foto> iter = fotos.iterator();
+        boolean result = true;
+        if (!iter.hasNext()) {
+            return result;
+        }
+        Foto foto1 = iter.next();
+        while (iter.hasNext() && result) {
+            Foto foto2 = iter.next();
+            if (comp.compare(foto1,foto2) >= 0) {
+                result = false;
+            }
+            foto1 = foto2;
+        }
+        return result;
+    }
+
+    @Test
+    public void validateSorted(){
+        Foto object = null;
+        // An empty collection is sorted
+        assertTrue(isSorted2(fotos, new BreedteComparator()));
+        fotos.add(foto1);
+        // A collection with one element is sorted
+        assertTrue(isSorted2(fotos, new BreedteComparator()));
+        fotos.add(foto2);
+        // The collection with these equal fotos is sorted
+        assertTrue(isSorted2(fotos, new BreedteComparator()));
+        fotos.add(foto3);
+        // The collection si now not sorted
+        assertFalse(isSorted2(fotos, new BreedteComparator()));
+        fotos.clear();
+    }
     /**
      * Test of add method, of class IFotoVerzameling.
      */

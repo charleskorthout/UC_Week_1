@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="FotoVerzameling_FX_startproject" level="project" />
     <orderEntry type="library" name="junit-4.12" level="application" />
+    <orderEntry type="library" name="junit:junit:4.12" level="project" />
   </component>
 </module>

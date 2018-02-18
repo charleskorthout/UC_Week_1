@@ -33,10 +33,11 @@ protected boolean isSorted (List<Foto> fotos, Comparator comp)
       }
       return true;
     }
-    
-/**
-     * Test of sort method, of class IFotoVerzameling.
-     */
+ ```
+ 
+ 
+``` java
+
     @Test
     public void testSort() {
         System.out.println("sort");
@@ -55,6 +56,53 @@ protected boolean isSorted (List<Foto> fotos, Comparator comp)
     }    
 ```
 
+ **Start Update 2018**
+ 
+ De bovenstaande test is gebaseerd op een lijst van fotos. Een betere oplossing is om uit te gaan van de FotoVerzameling interface.
+ Een test om de gesorteerdheid te testen is bijvoorbeeld:
+ 
+ ``` java
+public void validateSorted(){
+	Foto object = null;
+	// An empty collection is sorted
+	assertTrue(isSorted2(fotos, new BreedteComparator()));
+	fotos.add(foto1);
+	// A collection with one element is sorted
+	assertTrue(isSorted2(fotos, new BreedteComparator()));
+	fotos.add(foto2);
+	// The collection with these equal fotos is sorted
+	assertTrue(isSorted2(fotos, new BreedteComparator()));
+	fotos.add(foto3);
+	// The collection si now not sorted
+	assertFalse(isSorted2(fotos, new BreedteComparator()));
+	fotos.clear();
+    }
+
+
+```
+ De <code>isSorted2</code> test functie ziet er dan als volgt uit:
+ 
+ ``` java
+ public static final boolean isSorted2(IFotoVerzameling fotos, Comparator comp) {
+         Iterator<Foto> iter = fotos.iterator();
+         boolean result = true;
+         if (!iter.hasNext()) {
+             return result;
+         }
+         Foto foto1 = iter.next();
+         while (iter.hasNext() && result) {
+             Foto foto2 = iter.next();
+             if (comp.compare(foto1,foto2) >= 0) {
+                 result = false;
+             }
+             foto1 = foto2;
+         }
+         return result;
+     }
+```
+
+ **End Update 2018**
+ 
 ## Opdracht 1.2
 Maak in de package verzameling een klasse VerzamelingLijst.java die de interface IFotoVerzameling implementeert.
 
@@ -127,7 +175,7 @@ public class NaamComparator <T extends Foto> extends FotoComparator<T> {
 ```
 De verschillende vergelijkingen zijn nu als speciale classes te maken.
 
-``` java
+``` { java }
 public class FotoNaamCompare<T extends Foto> implements ICompareStrategy<T> {
 
     /**
