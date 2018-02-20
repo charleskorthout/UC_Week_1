@@ -71,21 +71,26 @@ public class IFotoVerzamelingTest {
       return true;
     }
 
+    /**
+     *
+     * @param fotos De foto verzameling
+     * @param comp De Comparator
+     * @return true als de verzameling gesorteerd is anders false
+     */
     public static final boolean isSorted2(IFotoVerzameling fotos, Comparator comp) {
         Iterator<Foto> iter = fotos.iterator();
-        boolean result = true;
         if (!iter.hasNext()) {
-            return result;
+            return true;
         }
         Foto foto1 = iter.next();
-        while (iter.hasNext() && result) {
+        while (iter.hasNext()) {
             Foto foto2 = iter.next();
             if (comp.compare(foto1,foto2) >= 0) {
-                result = false;
+                return false;
             }
             foto1 = foto2;
         }
-        return result;
+        return true;
     }
 
     @Test
