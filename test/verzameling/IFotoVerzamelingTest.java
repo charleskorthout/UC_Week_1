@@ -93,22 +93,44 @@ public class IFotoVerzamelingTest {
         return true;
     }
 
+    /**
+     * Maak een ongesorteerde verzameling aan van fotos breedte, hoogte en naam. het aantal is zo groot
+     * dat aangenomen mag worden dat hij ongesorteerd is.
+     * @return De verzameling fotos
+     */
+    IFotoVerzameling getCollection() {
+        // Todo maak random lijst aan
+        return new VerzamelingLijst();
+    }
+
     @Test
+    /**
+     * Test of de nieuwe sorteer validatie correct is
+     *  Regels:
+     *  - een lege verzameling is gesorteerd
+     *  - een verzameling met 1 element is gesorteerd
+     *  - het aanroepen van de functie op een ongesorteerde verzameling moet false terug geven
+     *  - het aanroepen van de functie op een (vooraf) gesorteerde verzameling moet true terug geven
+     */
     public void validateSorted(){
         Foto object = null;
+        Comparator comp = new BreedteComparator();
         // An empty collection is sorted
-        assertTrue(isSorted2(fotos, new BreedteComparator()));
+        assertTrue(isSorted2(fotos, comp));
         fotos.add(foto1);
         // A collection with one element is sorted
-        assertTrue(isSorted2(fotos, new BreedteComparator()));
+        assertTrue(isSorted2(fotos, comp));
         fotos.add(foto2);
-        // The collection with these equal fotos is sorted
-        assertTrue(isSorted2(fotos, new BreedteComparator()));
-        fotos.add(foto3);
-        // The collection si now not sorted
-        assertFalse(isSorted2(fotos, new BreedteComparator()));
+        IFotoVerzameling fotos2 = getCollection();
+        // The collection with these unsorted fotos is not sorted
+        assertFalse(isSorted2(fotos2, comp));
+        // sort the collection
+        fotos2.sort(comp);
+        // The collection is now not sorted
+        assertTrue(isSorted2(fotos2, comp));
         fotos.clear();
     }
+
     /**
      * Test of add method, of class IFotoVerzameling.
      */

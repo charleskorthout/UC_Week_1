@@ -62,43 +62,79 @@ protected boolean isSorted (List<Foto> fotos, Comparator comp)
  Een test om de gesorteerdheid te testen is bijvoorbeeld:
  
  ``` java
-public void validateSorted(){
-	Foto object = null;
-	// An empty collection is sorted
-	assertTrue(isSorted2(fotos, new BreedteComparator()));
-	fotos.add(foto1);
-	// A collection with one element is sorted
-	assertTrue(isSorted2(fotos, new BreedteComparator()));
-	fotos.add(foto2);
-	// The collection with these equal fotos is sorted
-	assertTrue(isSorted2(fotos, new BreedteComparator()));
-	fotos.add(foto3);
-	// The collection si now not sorted
-	assertFalse(isSorted2(fotos, new BreedteComparator()));
-	fotos.clear();
+  /**
+     *
+     * @param fotos De foto verzameling
+     * @param comp De Comparator
+     * @return true als de verzameling gesorteerd is anders false
+     */
+    public static final boolean isSorted2(IFotoVerzameling fotos, Comparator comp) {
+        Iterator<Foto> iter = fotos.iterator();
+        if (!iter.hasNext()) {
+            return true;
+        }
+        Foto foto1 = iter.next();
+        while (iter.hasNext()) {
+            Foto foto2 = iter.next();
+            if (comp.compare(foto1,foto2) >= 0) {
+                return false;
+            }
+            foto1 = foto2;
+        }
+        return true;
     }
-
-
 ```
- De <code>isSorted2</code> test functie ziet er dan als volgt uit:
+Om de functie goed te testen hebben we een fotoverzameling nodig met een aantal willekeurig aangemaakte fotos die groot genoeg is om toevallige gesorteerdheid uit te sluiten.
+Een honderdtal elementen is bijvoorbeeld een geschikt aantal.
+
+``` java
+    /**
+     * Maak een ongesorteerde verzameling aan van fotos breedte, hoogte en naam. het aantal is zo groot
+     * dat aangenomen mag worden dat hij ongesorteerd is.
+     * @return De verzameling fotos
+     */
+    IFotoVerzameling getCollection() {
+        // Todo maak random lijst aan
+        return new VerzamelingLijst();
+    }
+```
+
+Tot slot moeten we een test routine hebben om de bovenstaande functie te testen. Deze routine moet de volgende regels testen:
+Regels:
+ - een lege verzameling is gesorteerd
+ - een verzameling met 1 element is gesorteerd
+  - het aanroepen van de functie op een ongesorteerde verzameling moet false terug geven
+ - het aanroepen van de functie op een (vooraf) gesorteerde verzameling moet true terug geven
  
- ``` java
- public static final boolean isSorted2(IFotoVerzameling fotos, Comparator comp) {
-         Iterator<Foto> iter = fotos.iterator();
-         boolean result = true;
-         if (!iter.hasNext()) {
-             return result;
-         }
-         Foto foto1 = iter.next();
-         while (iter.hasNext() && result) {
-             Foto foto2 = iter.next();
-             if (comp.compare(foto1,foto2) >= 0) {
-                 result = false;
-             }
-             foto1 = foto2;
-         }
-         return result;
-     }
+``` java 
+    @Test
+    /**
+     * Test of de nieuwe sorteer validatie correct is
+     *  Regels:
+     *  - een lege verzameling is gesorteerd
+     *  - een verzameling met 1 element is gesorteerd
+     *  - het aanroepen van de functie op een ongesorteerde verzameling moet false terug geven
+     *  - het aanroepen van de functie op een (vooraf) gesorteerde verzameling moet true terug geven
+     */
+    public void validateSorted(){
+        Foto object = null;
+        Comparator comp = new BreedteComparator();
+        // An empty collection is sorted
+        assertTrue(isSorted2(fotos, comp));
+        fotos.add(foto1);
+        // A collection with one element is sorted
+        assertTrue(isSorted2(fotos, comp));
+        fotos.add(foto2);
+        IFotoVerzameling fotos2 = getCollection();
+        // The collection with these unsorted fotos is not sorted
+        assertFalse(isSorted2(fotos2, comp));
+        // sort the collection
+        fotos2.sort(comp);
+        // The collection is now not sorted        
+        assertTrue(isSorted2(fotos2, comp));
+        fotos.clear();
+    }
+    
 ```
 
  **End Update 2018**
